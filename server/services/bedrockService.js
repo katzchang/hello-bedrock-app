@@ -127,3 +127,61 @@ JSONのみを返してください。`;
     throw new Error('AI応答の解析に失敗しました');
   }
 };
+
+export const recommendTasks = async (todos) => {
+  const prompt = `あなたはタスク管理の専門アシスタントです。以下のタスクリストを分析して、依存関係を検出し、次に取り組むべきタスクを推薦してください。
+
+タスクリスト:
+${JSON.stringify(todos, null, 2)}
+
+以下のJSON形式で応答してください：
+{
+  "recommendations": [
+    {
+      "taskId": "タスクID",
+      "title": "タスクのタイトル",
+      "score": 0-100の数値,
+      "reason": "推薦理由（日本語）",
+      "blockedBy": []
+    }
+  ],
+  "dependencies": [
+    {
+      "taskId": "タスクID",
+      "dependsOn": ["依存するタスクID1", "依存するタスクID2"],
+      "reasoning": "依存関係の理由"
+    }
+  ],
+  "insights": "全体的な分析結果やアドバイス"
+}
+
+分析基準：
+1. 依存関係の検出：
+   - タスクのタイトルと説明を分析し、論理的な順序関係を特定
+   - 完了済みタスクは依存関係から除外
+
+2. 推薦スコアリング（優先順位）：
+   - ブロックされていない（依存タスクが完了済み）: +40点
+   - 優先度が高い（urgent=30, high=20, medium=10, low=5）
+   - 他のタスクに依存されている: +15点
+   - 作成日が古い: +10点
+   - 完了済み: -100点（除外）
+
+3. 推薦リスト：
+   - 上位5件のみ返す
+   - スコアの高い順にソート
+   - 未完了タスクのみ
+
+JSONのみを返してください。`;
+
+  const response = await invokeModel(prompt);
+
+  try {
+    const cleanedResponse = response.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    const result = JSON.parse(cleanedResponse);
+    return result;
+  } catch (error) {
+    console.error('Failed to parse AI response:', response);
+    throw new Error('AI応答の解析に失敗しました');
+  }
+};

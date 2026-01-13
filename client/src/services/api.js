@@ -45,7 +45,9 @@ export const aiAPI = {
   classifyTask: (title, description) => api.post('/ai/classify-task', { title, description }),
 
   setPriority: (title, description, deadline) =>
-    api.post('/ai/set-priority', { title, description, deadline })
+    api.post('/ai/set-priority', { title, description, deadline }),
+
+  recommendTasks: (todos) => api.post('/ai/recommend-tasks', { todos })
 };
 
 export default api;

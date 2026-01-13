@@ -160,6 +160,52 @@
   background-color: #ffebee;
 }
 
+.todo-dependencies {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  background: #fff3cd;
+  border-left: 4px solid #f59e0b;
+  border-radius: 4px;
+}
+
+.todo-dependencies .dep-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.todo-dependencies .dep-info {
+  flex: 1;
+  font-size: 0.85rem;
+}
+
+.todo-dependencies .dep-info strong {
+  color: #333;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.todo-dependencies .dep-tasks {
+  margin: 0 0 0.5rem 0;
+  padding-left: 1.5rem;
+  color: #666;
+}
+
+.todo-dependencies .dep-tasks li {
+  margin: 0.25rem 0;
+}
+
+.todo-dependencies .dep-reason {
+  margin: 0.5rem 0 0 0;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: #555;
+  font-style: italic;
+}
+
 @media (max-width: 768px) {
   .todo-item {
     flex-direction: column;

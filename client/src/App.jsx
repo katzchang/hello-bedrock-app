@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import AIAssistant from './components/AIAssistant';
+import TaskRecommendations from './components/TaskRecommendations';
 import TodoForm from './components/TodoForm';
 import TodoFilters from './components/TodoFilters';
 import TodoList from './components/TodoList';
@@ -18,6 +19,8 @@ function App() {
       <main className="app-main">
         <div className="app-container">
           <AIAssistant />
+
+          <TaskRecommendations />
 
           {showForm && <TodoForm />}
 

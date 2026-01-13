@@ -1,0 +1,272 @@
+.task-recommendations {
+  margin: 1rem 0;
+}
+
+.btn-ai {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+}
+
+.btn-ai:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(102, 126, 234, 0.4);
+}
+
+.btn-ai:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.recommendations-panel {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 1rem;
+  overflow: hidden;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.panel-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.btn-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.btn-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.insights-section {
+  padding: 1rem 1.5rem;
+  background: #f0f4ff;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.insights {
+  margin: 0;
+  color: #444;
+  line-height: 1.6;
+}
+
+.recommendations-list {
+  padding: 1.5rem;
+}
+
+.recommendations-list h4 {
+  margin: 0 0 1rem 0;
+  color: #333;
+}
+
+.recommendation-item {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  transition: all 0.2s;
+}
+
+.recommendation-item:hover {
+  border-color: #667eea;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+}
+
+.rank-badge {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.rec-content {
+  flex: 1;
+}
+
+.rec-content h5 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+}
+
+.reason {
+  margin: 0 0 0.75rem 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.rec-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.score {
+  background: #e0e0e0;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.no-blockers {
+  color: #22c55e;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.dependencies-info {
+  flex: 1;
+}
+
+.dep-label {
+  color: #f59e0b;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.dep-list {
+  margin: 0.25rem 0 0 0;
+  padding-left: 1.5rem;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.dependencies-section {
+  padding: 1.5rem;
+  background: #fafafa;
+  border-top: 1px solid #e0e0e0;
+}
+
+.dependencies-section h4 {
+  margin: 0 0 1rem 0;
+  color: #333;
+}
+
+.dependency-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.dep-main-task {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.5rem;
+  background: #e0f2fe;
+  border-left: 4px solid #0ea5e9;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.dep-arrow {
+  font-size: 1.5rem;
+  color: #999;
+}
+
+.dep-required-tasks {
+  flex: 1;
+  min-width: 200px;
+}
+
+.required-task {
+  padding: 0.5rem;
+  background: #fef3c7;
+  border-left: 4px solid #f59e0b;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.required-task:last-child {
+  margin-bottom: 0;
+}
+
+.dep-reasoning {
+  flex-basis: 100%;
+  margin: 0.5rem 0 0 0;
+  padding: 0.5rem;
+  background: #f5f5f5;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.ai-loading {
+  text-align: center;
+  padding: 2rem;
+}
+
+.spinner {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #667eea;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .dependency-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dep-arrow {
+    transform: rotate(90deg);
+    align-self: center;
+  }
+
+  .dep-main-task,
+  .dep-required-tasks {
+    min-width: 100%;
+  }
+}

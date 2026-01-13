@@ -1,4 +1,4 @@
-import { generateTasks, classifyTask, setPriority } from '../services/bedrockService.js';
+import { generateTasks, classifyTask, setPriority, recommendTasks } from '../services/bedrockService.js';
 
 export const generateTasksController = async (req, res, next) => {
   try {
@@ -48,6 +48,24 @@ export const setPriorityController = async (req, res, next) => {
     }
 
     const result = await setPriority(title, description, deadline);
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const recommendTasksController = async (req, res, next) => {
+  try {
+    const { todos } = req.body;
+
+    if (!todos || !Array.isArray(todos) || todos.length === 0) {
+      return res.status(400).json({
+        error: 'Validation Error',
+        message: 'タスクリストを提供してください'
+      });
+    }
+
+    const result = await recommendTasks(todos);
     res.json(result);
   } catch (error) {
     next(error);

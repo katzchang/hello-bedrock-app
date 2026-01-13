@@ -30,7 +30,7 @@ const PriorityBadge = ({ priority }) => {
 };
 
 const TodoItem = ({ todo }) => {
-  const { toggleComplete, deleteTodo } = useTodos();
+  const { toggleComplete, deleteTodo, recommendations, todos } = useTodos();
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleToggle = async () => {
@@ -52,6 +52,19 @@ const TodoItem = ({ todo }) => {
       }
     }
   };
+
+  const getDependencies = () => {
+    if (!recommendations?.dependencies) return null;
+    const dep = recommendations.dependencies.find(d => d.taskId === todo.id);
+    return dep;
+  };
+
+  const getTaskTitle = (taskId) => {
+    const task = todos.find(t => t.id === taskId);
+    return task ? task.title : taskId;
+  };
+
+  const dependency = getDependencies();
 
   return (
     <div className={`todo-item ${todo.completed ? 'completed' : ''} ${isDeleting ? 'deleting' : ''}`}>
@@ -85,6 +98,21 @@ const TodoItem = ({ todo }) => {
             </div>
           )}
         </div>
+
+        {dependency && dependency.dependsOn.length > 0 && (
+          <div className="todo-dependencies">
+            <span className="dep-icon">⚠</span>
+            <div className="dep-info">
+              <strong>依存タスク:</strong>
+              <ul className="dep-tasks">
+                {dependency.dependsOn.map(depId => (
+                  <li key={depId}>{getTaskTitle(depId)}</li>
+                ))}
+              </ul>
+              <p className="dep-reason">{dependency.reasoning}</p>
+            </div>
+          </div>
+        )}
 
         <div className="todo-footer">
           <span className="todo-date">

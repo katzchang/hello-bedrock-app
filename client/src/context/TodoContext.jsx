@@ -16,6 +16,7 @@ export const TodoProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [aiLoading, setAiLoading] = useState(false);
+  const [recommendations, setRecommendations] = useState(null);
 
   const [filters, setFilters] = useState({
     completed: undefined,
@@ -127,6 +128,20 @@ export const TodoProvider = ({ children }) => {
     }
   };
 
+  const getRecommendations = async () => {
+    setAiLoading(true);
+    try {
+      const response = await aiAPI.recommendTasks(todos);
+      setRecommendations(response.data);
+      return response.data;
+    } catch (err) {
+      setError('タスク推薦の取得に失敗しました');
+      throw err;
+    } finally {
+      setAiLoading(false);
+    }
+  };
+
   const updateFilters = (newFilters) => {
     setFilters((prev) => ({ ...prev, ...newFilters }));
   };
@@ -152,6 +167,7 @@ export const TodoProvider = ({ children }) => {
     error,
     aiLoading,
     filters,
+    recommendations,
     fetchTodos,
     addTodo,
     updateTodo,
@@ -160,6 +176,8 @@ export const TodoProvider = ({ children }) => {
     generateTasks,
     classifyTask,
     setPriorityAI,
+    getRecommendations,
+    setRecommendations,
     updateFilters,
     setError
   };
