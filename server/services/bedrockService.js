@@ -2,6 +2,7 @@ import { InvokeModelCommand } from '@aws-sdk/client-bedrock-runtime';
 import bedrockClient, { MODEL_ID } from '../config/bedrock.js';
 
 const invokeModel = async (prompt) => {
+  // Claude API のペイロード形式
   const payload = {
     anthropic_version: 'bedrock-2023-05-31',
     max_tokens: 2000,

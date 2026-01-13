@@ -16,7 +16,7 @@ const bedrockClient = new BedrockRuntimeClient({
   }
 });
 
-// Claude 3.5 Sonnet v1 (より広く利用可能)
-export const MODEL_ID = 'anthropic.claude-3-5-sonnet-20240620-v1:0';
+// Claude Sonnet 4.5 (最新版) - inference profile経由でアクセス
+export const MODEL_ID = 'us.anthropic.claude-sonnet-4-5-20250929-v1:0';
 
 export default bedrockClient;
