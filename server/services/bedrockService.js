@@ -128,6 +128,153 @@ JSONのみを返してください。`;
   }
 };
 
+export const generateExecutionGuide = async (title, description = '', category = 'other', priority = 'medium') => {
+  const prompt = `あなたは実用的なタスク管理アシスタントです。以下のタスクを完了するための具体的な実行手順を生成してください。
+
+タスクのタイトル: "${title}"
+タスクの説明: "${description}"
+カテゴリ: ${category}
+優先度: ${priority}
+
+以下のJSON形式で、ステップバイステップの実行手順を生成してください：
+{
+  "steps": [
+    {
+      "stepNumber": 1,
+      "instruction": "具体的な手順の説明",
+      "estimatedTime": "推定所要時間（例: 5分、30分、1時間）",
+      "tips": "役立つヒントやアドバイス"
+    }
+  ],
+  "totalEstimatedTime": "全体の推定所要時間",
+  "prerequisites": ["事前に必要なこと1", "事前に必要なこと2"],
+  "successCriteria": "このタスクが完了したと判断できる基準"
+}
+
+要件:
+- 3〜7個のステップに分解してください
+- 各ステップは具体的で実行可能であること
+- 時間の見積もりは現実的であること
+- ヒントは実用的で役立つこと
+
+JSONのみを返してください。`;
+
+  const response = await invokeModel(prompt);
+
+  try {
+    const cleanedResponse = response.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    const result = JSON.parse(cleanedResponse);
+    return result;
+  } catch (error) {
+    console.error('Failed to parse AI response:', response);
+    throw new Error('AI応答の解析に失敗しました');
+  }
+};
+
+export const generateCompletionMessage = async (title, description = '', category = 'other') => {
+  const prompt = `あなたは励ましとモチベーションを高めるアシスタントです。ユーザーがタスクを完了しました。心から祝福するメッセージを生成してください。
+
+タスクのタイトル: "${title}"
+タスクの説明: "${description}"
+カテゴリ: ${category}
+
+以下のJSON形式で応答してください：
+{
+  "message": "タスク完了を祝福する短いメッセージ（1-2文）",
+  "encouragement": "さらなる励ましの言葉や次への動機づけ（1-2文）",
+  "emoji": "適切な絵文字1つ（🎉、🎊、⭐、🏆、💪など）"
+}
+
+要件:
+- メッセージは明るく前向きで、達成感を感じさせること
+- カテゴリに応じた適切な表現を使うこと
+- 簡潔で読みやすいこと
+- 絵文字は1つだけ
+
+JSONのみを返してください。`;
+
+  const response = await invokeModel(prompt);
+
+  try {
+    const cleanedResponse = response.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    const result = JSON.parse(cleanedResponse);
+    return result;
+  } catch (error) {
+    console.error('Failed to parse AI response:', response);
+    throw new Error('AI応答の解析に失敗しました');
+  }
+};
+
+export const detectStaleTasks = async (todos) => {
+  const STALE_THRESHOLD_DAYS = 7;
+  const now = new Date();
+
+  const staleTasks = todos
+    .filter(todo => !todo.completed)
+    .filter(todo => {
+      const updatedAt = new Date(todo.updatedAt || todo.createdAt);
+      const daysSinceUpdate = (now - updatedAt) / (1000 * 60 * 60 * 24);
+      return daysSinceUpdate >= STALE_THRESHOLD_DAYS;
+    })
+    .map(todo => {
+      const updatedAt = new Date(todo.updatedAt || todo.createdAt);
+      const daysSinceUpdate = Math.floor((now - updatedAt) / (1000 * 60 * 60 * 24));
+      return {
+        id: todo.id,
+        title: todo.title,
+        daysSinceUpdate
+      };
+    });
+
+  if (staleTasks.length === 0) {
+    return {
+      staleTasks: [],
+      overallMessage: '',
+      taskMessages: {},
+      actionSuggestion: ''
+    };
+  }
+
+  const prompt = `あなたは優しく励ますタスク管理アシスタントです。以下の停滞しているタスクについて、前向きな励ましメッセージを生成してください。
+
+停滞タスク:
+${JSON.stringify(staleTasks, null, 2)}
+
+以下のJSON形式で応答してください：
+{
+  "overallMessage": "全体的な励ましメッセージ（2-3文）",
+  "taskMessages": {
+    "タスクID1": "そのタスク固有の励ましメッセージ（1-2文）",
+    "タスクID2": "そのタスク固有の励ましメッセージ（1-2文）"
+  },
+  "actionSuggestion": "次に取るべき具体的なアクションの提案（1-2文）"
+}
+
+要件:
+- 責めるような表現は避け、前向きで励ます内容にすること
+- タスクの停滞理由を推測し、具体的なアドバイスを含めること
+- 小さな一歩から始めることを提案すること
+- 明るく親しみやすいトーンで書くこと
+
+JSONのみを返してください。`;
+
+  const response = await invokeModel(prompt);
+
+  try {
+    const cleanedResponse = response.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    const result = JSON.parse(cleanedResponse);
+    return {
+      staleTasks: staleTasks.map(t => t.id),
+      overallMessage: result.overallMessage,
+      taskMessages: result.taskMessages,
+      actionSuggestion: result.actionSuggestion
+    };
+  } catch (error) {
+    console.error('Failed to parse AI response:', response);
+    throw new Error('AI応答の解析に失敗しました');
+  }
+};
+
 export const recommendTasks = async (todos) => {
   const prompt = `あなたはタスク管理の専門アシスタントです。以下のタスクリストを分析して、依存関係を検出し、次に取り組むべきタスクを推薦してください。
 

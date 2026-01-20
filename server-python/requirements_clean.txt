@@ -1,0 +1,23 @@
+# Web Framework
+flask==3.0.0
+flask-cors==4.0.0
+gunicorn==21.2.0
+
+# AWS Bedrock
+boto3==1.35.0
+botocore==1.35.0
+
+# HTTP Client
+requests==2.32.3
+
+# Environment Variables
+python-dotenv==1.0.1
+
+# OpenTelemetry - 統一されたバージョン (1.27.0系)
+opentelemetry-api==1.27.0
+opentelemetry-sdk==1.27.0
+opentelemetry-instrumentation==0.48b0
+opentelemetry-instrumentation-flask==0.48b0
+opentelemetry-instrumentation-requests==0.48b0
+opentelemetry-instrumentation-botocore==0.48b0
+opentelemetry-exporter-otlp==1.27.0

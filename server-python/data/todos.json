@@ -1,0 +1,110 @@
+[
+  {
+    "id": "1dfd513d-20e4-4318-b284-e628466b7c68",
+    "title": "動きやすい服装を用意",
+    "description": "運動用のTシャツ、パンツ、着替えを準備する",
+    "category": "health",
+    "priority": "medium",
+    "completed": false,
+    "tags": [],
+    "createdAt": "2026-01-13T01:20:33.319Z",
+    "updatedAt": "2026-01-13T01:20:33.319Z",
+    "completedAt": null
+  },
+  {
+    "id": "3632da80-1d16-4e3a-ae3d-a19df988a8a0",
+    "title": "ジムまでの交通手段を確認",
+    "description": "電車・バスの時刻や駐車場の有無を確認する",
+    "category": "personal",
+    "priority": "medium",
+    "completed": false,
+    "tags": [],
+    "createdAt": "2026-01-13T01:20:33.334Z",
+    "updatedAt": "2026-01-13T01:20:33.334Z",
+    "completedAt": null
+  },
+  {
+    "id": "0be6a4e5-3294-493f-bd4a-b4a8155cf27c",
+    "title": "ストレッチで体をほぐす",
+    "description": "ジム到着後、クライミング前に十分なウォームアップを行う",
+    "category": "health",
+    "priority": "high",
+    "completed": false,
+    "tags": [],
+    "createdAt": "2026-01-13T01:20:33.343Z",
+    "updatedAt": "2026-01-13T01:20:33.343Z",
+    "completedAt": null
+  },
+  {
+    "id": "2a03fef9-e438-482f-ba3c-52137a91c5e2",
+    "title": "開催日時と会場を決定する",
+    "description": "参加者の都合を確認し、日程調整と会場の予約を行う",
+    "category": "work",
+    "priority": "urgent",
+    "completed": false,
+    "tags": [],
+    "createdAt": "2026-01-13T06:49:46.061Z",
+    "updatedAt": "2026-01-13T06:49:46.061Z",
+    "completedAt": null
+  },
+  {
+    "id": "682e060b-8072-4893-b1c6-06801fe7f6d5",
+    "title": "予算を設定し会費を決める",
+    "description": "全体の予算を計算し、参加者一人当たりの会費を設定する",
+    "category": "work",
+    "priority": "high",
+    "completed": false,
+    "tags": [],
+    "createdAt": "2026-01-13T06:49:46.081Z",
+    "updatedAt": "2026-01-13T06:49:46.081Z",
+    "completedAt": null
+  },
+  {
+    "id": "4acfcd87-b171-49e7-8a93-c7ecb476f477",
+    "title": "料理・飲み物の手配をする",
+    "description": "参加人数に応じたコース料理やドリンクメニューを会場と調整する",
+    "category": "work",
+    "priority": "medium",
+    "completed": false,
+    "tags": [],
+    "createdAt": "2026-01-13T06:49:46.100Z",
+    "updatedAt": "2026-01-13T06:49:46.100Z",
+    "completedAt": null
+  },
+  {
+    "id": "6c5597cc-b44d-4239-bc53-0a83a9bb5527",
+    "title": "当日のプログラムを企画する",
+    "description": "乾杯の挨拶、余興、ゲームなどのタイムスケジュールを作成する",
+    "category": "work",
+    "priority": "medium",
+    "completed": false,
+    "tags": [],
+    "createdAt": "2026-01-13T06:49:46.112Z",
+    "updatedAt": "2026-01-13T06:49:46.112Z",
+    "completedAt": null
+  },
+  {
+    "id": "76b40320-4540-4348-b075-99e74280e94c",
+    "title": "必要な備品や資料を準備する",
+    "description": "名札、プレゼント、配布資料などを用意する",
+    "category": "shopping",
+    "priority": "low",
+    "completed": false,
+    "tags": [],
+    "createdAt": "2026-01-13T06:49:46.129Z",
+    "updatedAt": "2026-01-13T06:49:46.129Z",
+    "completedAt": null
+  },
+  {
+    "id": "169e0e5f-8000-4572-82e9-a39307c8c57e",
+    "title": "当日のリマインドと最終確認を行う",
+    "description": "参加者への最終案内と会場への人数・内容の確認をする",
+    "category": "work",
+    "priority": "high",
+    "completed": false,
+    "tags": [],
+    "createdAt": "2026-01-13T06:49:46.146Z",
+    "updatedAt": "2026-01-13T06:49:46.146Z",
+    "completedAt": null
+  }
+]

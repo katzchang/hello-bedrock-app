@@ -41,3 +41,11 @@ server/data/todos.json
 # OS
 .DS_Store
 Thumbs.db
+
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python

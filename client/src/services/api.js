@@ -47,7 +47,20 @@ export const aiAPI = {
   setPriority: (title, description, deadline) =>
     api.post('/ai/set-priority', { title, description, deadline }),
 
+  generateExecutionGuide: (title, description, category, priority) =>
+    api.post('/ai/generate-execution-guide', { title, description, category, priority }),
+
+  generateCompletionMessage: (title, description, category) =>
+    api.post('/ai/generate-completion-message', { title, description, category }),
+
+  detectStaleTasks: (todos) => api.post('/ai/detect-stale-tasks', { todos }),
+
   recommendTasks: (todos) => api.post('/ai/recommend-tasks', { todos })
+};
+
+export const searchAPI = {
+  searchTaskContext: (title, description, numResults = 5) =>
+    api.post('/search/task-context', { title, description, numResults })
 };
 
 export default api;

@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext } from 'react';
-import { todosAPI, aiAPI } from '../services/api';
+import { todosAPI, aiAPI, searchAPI } from '../services/api';
 
 const TodoContext = createContext();
 
@@ -17,6 +17,11 @@ export const TodoProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [aiLoading, setAiLoading] = useState(false);
   const [recommendations, setRecommendations] = useState(null);
+  const [executionGuides, setExecutionGuides] = useState({});
+  const [completionMessage, setCompletionMessage] = useState(null);
+  const [staleTasksInfo, setStaleTasksInfo] = useState(null);
+  const [contextSearchResults, setContextSearchResults] = useState({});
+  const [searchLoading, setSearchLoading] = useState(false);
 
   const [filters, setFilters] = useState({
     completed: undefined,
@@ -42,6 +47,12 @@ export const TodoProvider = ({ children }) => {
   useEffect(() => {
     fetchTodos();
   }, [filters.completed, filters.category, filters.priority]);
+
+  useEffect(() => {
+    if (todos.length > 0) {
+      checkStaleTasks();
+    }
+  }, [todos.length]);
 
   const addTodo = async (todoData) => {
     try {
@@ -80,9 +91,31 @@ export const TodoProvider = ({ children }) => {
   const toggleComplete = async (id) => {
     try {
       const response = await todosAPI.toggleComplete(id);
+      const updatedTodo = response.data;
+
       setTodos((prev) =>
-        prev.map((todo) => (todo.id === id ? response.data : todo))
+        prev.map((todo) => (todo.id === id ? updatedTodo : todo))
       );
+
+      // Generate completion message when task is marked as complete
+      if (updatedTodo.completed && !completionMessage) {
+        try {
+          const messageResponse = await aiAPI.generateCompletionMessage(
+            updatedTodo.title,
+            updatedTodo.description || '',
+            updatedTodo.category || 'other'
+          );
+          setCompletionMessage({ todoId: id, ...messageResponse.data });
+
+          // Auto-hide after 5 seconds
+          setTimeout(() => {
+            setCompletionMessage(null);
+          }, 5000);
+        } catch (messageErr) {
+          console.error('Failed to generate completion message:', messageErr);
+          // Don't throw - completion message is optional
+        }
+      }
     } catch (err) {
       setError('完了状態の切り替えに失敗しました');
       throw err;
@@ -128,6 +161,68 @@ export const TodoProvider = ({ children }) => {
     }
   };
 
+  const generateExecutionGuide = async (todo) => {
+    setAiLoading(true);
+    try {
+      const response = await aiAPI.generateExecutionGuide(
+        todo.title,
+        todo.description || '',
+        todo.category || 'other',
+        todo.priority || 'medium'
+      );
+      setExecutionGuides((prev) => ({
+        ...prev,
+        [todo.id]: response.data
+      }));
+      return response.data;
+    } catch (err) {
+      setError('実行手順の生成に失敗しました');
+      throw err;
+    } finally {
+      setAiLoading(false);
+    }
+  };
+
+  const checkStaleTasks = async () => {
+    if (todos.length === 0) {
+      setStaleTasksInfo(null);
+      return;
+    }
+
+    try {
+      const response = await aiAPI.detectStaleTasks(todos);
+      if (response.data.staleTasks.length > 0) {
+        setStaleTasksInfo(response.data);
+      } else {
+        setStaleTasksInfo(null);
+      }
+    } catch (err) {
+      console.error('Failed to check stale tasks:', err);
+      // Don't set error - this is a background check
+    }
+  };
+
+  const searchTaskContext = async (todo) => {
+    setSearchLoading(true);
+    try {
+      const response = await searchAPI.searchTaskContext(
+        todo.title,
+        todo.description || '',
+        5
+      );
+      setContextSearchResults((prev) => ({
+        ...prev,
+        [todo.id]: response.data
+      }));
+      return response.data;
+    } catch (err) {
+      setError('コンテキスト検索に失敗しました');
+      throw err;
+    } finally {
+      setSearchLoading(false);
+    }
+  };
+
   const getRecommendations = async () => {
     setAiLoading(true);
     try {
@@ -168,6 +263,11 @@ export const TodoProvider = ({ children }) => {
     aiLoading,
     filters,
     recommendations,
+    executionGuides,
+    completionMessage,
+    staleTasksInfo,
+    contextSearchResults,
+    searchLoading,
     fetchTodos,
     addTodo,
     updateTodo,
@@ -176,8 +276,12 @@ export const TodoProvider = ({ children }) => {
     generateTasks,
     classifyTask,
     setPriorityAI,
+    generateExecutionGuide,
+    checkStaleTasks,
+    searchTaskContext,
     getRecommendations,
     setRecommendations,
+    setCompletionMessage,
     updateFilters,
     setError
   };

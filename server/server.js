@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 import todoRoutes from './routes/todos.js';
 import aiRoutes from './routes/ai.js';
+import searchRoutes from './routes/search.js';
 import errorHandler from './middleware/errorHandler.js';
 
 dotenv.config();
@@ -23,13 +24,15 @@ app.get('/', (req, res) => {
     version: '1.0.0',
     endpoints: {
       todos: '/api/todos',
-      ai: '/api/ai'
+      ai: '/api/ai',
+      search: '/api/search'
     }
   });
 });
 
 app.use('/api/todos', todoRoutes);
 app.use('/api/ai', aiRoutes);
+app.use('/api/search', searchRoutes);
 
 app.use(errorHandler);
 
